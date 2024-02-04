@@ -1,2 +1,4 @@
 py-cord
 python-dotenv
+chatterbot2
+spacy

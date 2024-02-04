@@ -2,3 +2,6 @@ env/
 __pycache__/
 .env
 test.py
+*.json
+*.sqlite3*
+last_message

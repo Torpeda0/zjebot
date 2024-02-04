@@ -1,6 +1,10 @@
-#discord
 discord_prefix = 'zjebot '
-discord_admins = [460096080030203906]
+discord_admin_role = 1203725703737245796
 
-discord_server_id = 1009176077169606758
-discord_main_channel_id = 1021834389426032660
+discord_server_id = 1203724163932487720
+discord_chat_id = 1203724163932487723
+
+chatbot_allowed_channels = [discord_chat_id]
+chatbot_random_response_chance = 0.05
+
+database_file = 'db.sqlite3'
