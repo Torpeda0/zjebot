@@ -20,21 +20,15 @@ class Chatbot(commands.Cog):
             return
         if message.channel.id not in config.chatbot_allowed_channels:
             return
-        if self.bot.user.mention in message.content:
-            await message.reply(await self.get_response(message), allowed_mentions=discord.AllowedMentions.none())
-        if message.reference:
-            if message.reference.resolved.author == self.bot.user:
-                await message.reply(await self.get_response(message), allowed_mentions=discord.AllowedMentions.none())
-        if random.randint(0,100)*0.01 <= config.chatbot_random_response_chance:
-            await message.reply(await self.get_response(message), allowed_mentions=discord.AllowedMentions.none())
-            
+        if self.bot.user.mention in message.content or (message.reference and message.reference.resolved.author == self.bot.user) or random.randint(0,100)*0.01 <= config.chatbot_random_response_chance:
+            async with message.channel.typing(): 
+                await message.reply(await self.get_response(message.content), allowed_mentions=discord.AllowedMentions.none())
 
-    async def get_response(self, message: discord.Message): 
-        content = message.content.replace(self.bot.user.mention, '')
+    async def get_response(self, message: str): 
+        message = message.replace(self.bot.user.mention, '')
         if message == '':
             return
-        async with message.channel.typing(): 
-            response = await asyncio.to_thread(chatbot.get_response, content)
+        response = await asyncio.to_thread(chatbot.get_response, message)
         await self.bot.change_presence(activity=discord.Game(name=response.text[:128]))   
         return response.text
     
